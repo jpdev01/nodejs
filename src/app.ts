@@ -12,6 +12,7 @@ export class App {
         this.listen();
         this.middlewares();
         this.database();
+        this.routes();
     }
 
     //inicia tudo
