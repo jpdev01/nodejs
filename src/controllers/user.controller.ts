@@ -8,7 +8,12 @@ class UserController {
         // crate é uma promisse, ou seja, precisamos esperar o mongoose criar e me retornar o usuario.
         // para isso, vamos usar o async e usar await para esperar o retorno
         const user = await userModel.create(req.body);
-        return resp.json(user);
+        const message = {
+            text: 'Usuário criado com sucesso!',
+            _id: user._id,
+            name: user.name
+        }
+        //return resp.json(user);
     }
 }
 

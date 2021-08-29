@@ -1,4 +1,9 @@
+import { UserInterface } from './../interfaces/user.interface';
 import { model, Schema } from 'mongoose';
+
+interface UserModel extends UserInterface, Document {
+
+}
 
 const UserSchema = new Schema({
     name: {
@@ -17,4 +22,4 @@ const UserSchema = new Schema({
 
 // 1 param = nome da coleção,
 // 2 param = propriedade criada
-export default model('Usuario', UserSchema);
+export default model<UserModel>('Usuario', UserSchema);
