@@ -3,9 +3,11 @@ import userModel from "../models/user.model";
 
 class UserController {
 
-    public register(req: Request, resp: Response){
+    public async register(req: Request, resp: Response): Promise<Response>{
         // create ja vem do mongoouse, cria registro, metodo pronto
-        const user = userModel.create(req.body);
+        // crate é uma promisse, ou seja, precisamos esperar o mongoose criar e me retornar o usuario.
+        // para isso, vamos usar o async e usar await para esperar o retorno
+        const user = await userModel.create(req.body);
         return resp.json(user);
     }
 }
