@@ -24,6 +24,13 @@ export class App {
     }
 
     private database(): void{
-        mongoose.connect('mongodb+srv://jpt:<password>@training-nodejs.zldnm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
+        const user = 'jpt';
+        const password = 'admadm';
+        mongoose.connect('mongodb+srv://' + user + ':'+ password + '@training-nodejs.zldnm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+            useUnifiedTopology: true,
+            useNewUrlParser: true
+        });
     }
+
+    private middle
 }
