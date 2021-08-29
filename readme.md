@@ -8,3 +8,13 @@ npm i @types/express @types/cors @types/mongoose
 criado banco de dados na nuvem com mongodb
 jpt 
 admadm
+
+dependencia para criptografar a senha do usuario:
+npm i  bcrypt
+instalar a tipagem:
+npm i @types/bcrypt -D 
+-D significa dependencia de desenvolvimento
+
+
+rocks => tomada de ação quando determinada ação for realizada
+ex: quando um novo cadastro de usuario for feito, quero que seja realizada uma ação em cima disso.
