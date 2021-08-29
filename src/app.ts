@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import userRoute from './routes/user.route';
 
 export class App {
     private express: express.Application;
@@ -38,5 +39,11 @@ export class App {
         this.express.use(express.json());
         //prepara os cors, para que o angular consiga acessar
         this.express.use(cors());
+    }
+
+    private routes(): void{
+        // primeiro param = rota inicial
+        // segundo = meu arquivo de rota
+        this.express.use('/users', userRoute);
     }
 }
