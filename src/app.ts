@@ -9,6 +9,7 @@ export class App {
     constructor() {
         this.express = express();
         this.listen();
+        this.middlewares();
         this.database();
     }
 
@@ -32,5 +33,10 @@ export class App {
         });
     }
 
-    private middle
+    private middlewares(): void{
+        // retorna um middleware que parseia nossas requsicoes em json, ou seja, só aceita json
+        this.express.use(express.json());
+        //prepara os cors, para que o angular consiga acessar
+        this.express.use(cors());
+    }
 }
