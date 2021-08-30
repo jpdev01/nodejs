@@ -1,10 +1,11 @@
 import { UserInterface } from './../interfaces/user.interface';
 import { model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 interface UserModel extends UserInterface, Document {
     comparePassword(entryPassword: string): Promise<boolean>;
-    teste();
+    generateToken(): string;
 }
 
 const UserSchema = new Schema({
@@ -38,6 +39,20 @@ UserSchema.methods.comparePassword = function (entryPassword: string): Promise<b
     return bcrypt.compare(entryPassword, this.password);
 }
 
+UserSchema.methods.generateToken = function(): string{
+
+    const decodedToken = {
+        _id: String(this.id),
+        name: this.name,
+        avatar: this.avatar
+    };
+    // codifica o meu token em base-64
+    //return jwt.sign(decodedToken, 'SECRET');
+    // com terceiro parametro (expiracao) tempo apos acesso
+    return jwt.sign(decodedToken, 'SECRET', {
+       expiresIn: '1d' 
+    });
+}
 // 1 param = nome da coleção,
 // 2 param = propriedade criada
 export default model<UserModel>('Usuario', UserSchema);

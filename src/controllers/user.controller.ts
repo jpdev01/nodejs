@@ -40,7 +40,10 @@ class UserController {
             });
         }
 
-        return resp.json(user);
+        return resp.json({
+            user: user,
+            token: user.generateToken()
+        });
     }
 }
 

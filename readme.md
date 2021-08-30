@@ -18,3 +18,6 @@ npm i @types/bcrypt -D
 
 rocks => tomada de ação quando determinada ação for realizada
 ex: quando um novo cadastro de usuario for feito, quero que seja realizada uma ação em cima disso.
+
+instalar jwt
+npm i jsonwebtoken
