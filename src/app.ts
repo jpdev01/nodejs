@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import userRoute from './routes/user.route';
+import messageRoute from './routes/message.route';
 
 export class App {
     private express: express.Application;
@@ -46,5 +47,6 @@ export class App {
         // primeiro param = rota inicial
         // segundo = meu arquivo de rota
         this.express.use('/users', userRoute);
+        this.express.use('/messages', messageRoute)
     }
 }
