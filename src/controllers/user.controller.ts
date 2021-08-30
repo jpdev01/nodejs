@@ -33,7 +33,7 @@ class UserController {
                 message: "Ops! Usuário não encontrado."
             });
         }
-        const correctPassword = await userModel.comparePassword(password);
+        const correctPassword = await user.comparePassword(password);
         if(correctPassword){
             return resp.status(400).send({
                 message: "Ops! Senha incorreta."
