@@ -34,7 +34,7 @@ class UserController {
             });
         }
         const correctPassword = await user.comparePassword(password);
-        if(correctPassword){
+        if(!correctPassword){
             return resp.status(400).send({
                 message: "Ops! Senha incorreta."
             });
