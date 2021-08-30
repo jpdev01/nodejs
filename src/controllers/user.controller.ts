@@ -12,10 +12,35 @@ class UserController {
             text: 'Usuário criado com sucesso!',
             _id: user._id,
             name: user.name,
-            avatar: user.avatar
+            avatar: user.avatar,
+            password: user.password
         }
         return resp.json(messageResponse);
         //return resp.json(user);
+    }
+
+    public async authenticate(req: Request, resp: Response): Promise<Response>{
+        // Destructuring assignment (es6) 
+        // extrai as propriedades name e password para duas variaveis.
+        // const name = req.body.name;
+        const { name, password } = req.body;
+
+        const user = await userModel.findOne({
+            name: name
+        });
+        if(!user){
+            return resp.status(400).send({
+                message: "Ops! Usuário não encontrado."
+            });
+        }
+        const correctPassword = await userModel.comparePassword(password);
+        if(correctPassword){
+            return resp.status(400).send({
+                message: "Ops! Senha incorreta."
+            });
+        }
+
+        return resp.json(user);
     }
 }
 
