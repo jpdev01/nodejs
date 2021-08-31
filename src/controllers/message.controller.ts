@@ -13,6 +13,20 @@ class MessageController {
 
         return resp.json(message);
     }
+
+    public async list(req: Request, res: Response): Promise<Response>{
+        const currentUserId = req.user._id;
+        const receiverUserId = req.userChat._id;
+
+        const messages = await messageModel.find({
+            $or: [
+                { $and: [ { sender: currentUserId }, { receiver: receiverUserId } ] },
+                { $and: [ { sender: receiverUserId }, { receiver: currentUserId } ] }
+            ]
+        });
+
+        return res.json(messages);
+    }   
 }
 
 export default new MessageController();

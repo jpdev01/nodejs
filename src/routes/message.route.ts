@@ -10,4 +10,11 @@ messageRoute.post('/:receiverId',
     authMiddleware.authUserByToken,
     messageController.send);
 //messageRoute.post('/:receiverId/:message', messageController.send)
+
+messageRoute.get(
+    '/:receiverId',
+    authMiddleware.authUserByParams,
+    authMiddleware.authUserByToken,
+    messageController.list);
+    
 export default messageRoute;
