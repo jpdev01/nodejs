@@ -45,6 +45,10 @@ class UserController {
             token: user.generateToken()
         });
     }
+    
+    public getById(req: Request, res: Response): Response{
+        return res.json(req.userChat);
+    }
 }
 
 export default new UserController();

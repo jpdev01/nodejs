@@ -37,10 +37,6 @@ class MessageController {
 
         return res.json(messagesChat);
     }
-
-    public getById(req: Request, res: Response): Response{
-        return res.json(req.userChat);
-    }
 }
 
 export default new MessageController();
