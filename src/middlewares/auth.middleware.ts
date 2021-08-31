@@ -5,7 +5,7 @@ import userModel from "../models/user.model";
 
 class AuthMiddleware {
 
-    public async authUserByToken(req: Request, resp: Response, next: NextFunction) {
+    public async authUserByToken(req: Request, resp: Response, next: NextFunction): Promise<Response | void> {
         const token = req.query.token || req.headers['x-acess-token'];
 
         if (!token) {
