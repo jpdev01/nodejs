@@ -1,5 +1,9 @@
+import { MessageInterface } from './../interfaces/message.interface';
 import { model, Schema } from 'mongoose';
 
+interface MessageModel extends MessageInterface, Document {
+
+}
 const MessageSchema = new Schema({
     text: {
         type: String,
@@ -25,6 +29,6 @@ const MessageSchema = new Schema({
 
 // 1 param = nome da coleção,
 // 2 param = propriedade criada
-export default model('Mensagem', MessageSchema);
+export default model<MessageModel>('Mensagem', MessageSchema);
 
 //obs: o id da collection ja é criado automaticamente
