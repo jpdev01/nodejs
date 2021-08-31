@@ -24,6 +24,8 @@ class AuthMiddleware {
                 });
             }
 
+            req.user = user;
+
             //next é a proxima funcao do mapeamento
             return next();
 
