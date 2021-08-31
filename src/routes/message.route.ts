@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import messageController from '../controllers/message.controller';
+import authMiddleware from '../middlewares/auth.middleware';
 
 const messageRoute = Router();
 
-messageRoute.post('/:id', messageController.send)
+// o segundo param para frente sao as funcoes executadas
+messageRoute.post('/:receiverId',
+    authMiddleware.authUserByToken,
+    messageController.send);
+//messageRoute.post('/:receiverId/:message', messageController.send)
 export default messageRoute;

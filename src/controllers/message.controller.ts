@@ -8,7 +8,7 @@ class MessageController {
         const message = await messageModel.create({
             text: req.body.text,
             sender: '',
-            receiver: ''
+            receiver: req.params.receiverId
         });
 
         return resp.json(message);
