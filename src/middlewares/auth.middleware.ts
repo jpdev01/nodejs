@@ -8,17 +8,30 @@ class AuthMiddleware {
     public async authUserByToken(req: Request, resp: Response, next: NextFunction) {
         const token = req.query.token || req.headers['x-acess-token'];
 
-        if(!token){
+        if (!token) {
             return resp.status(401).send({
                 messsage: 'Acesso restrito!'
             });
         }
 
-        const userToken = jwt.verify(String(token), 'SECRET') as UserInterface;
-        const user = await userModel.findById(userToken._id);
+        try {
+            const userToken = jwt.verify(String(token), 'SECRET') as UserInterface;
+            const user = await userModel.findById(userToken._id);
 
-        //next é a proxima funcao do mapeamento
-        return next();
+            if (!user) {
+                return resp.status(400).send({
+                    message: 'Usuário não existe no sistema!'
+                });
+            }
+
+            //next é a proxima funcao do mapeamento
+            return next();
+
+        } catch (error) {
+            return resp.status(401).send({
+                message: 'Token inválido!'
+            });
+        }
     }
 }
 
