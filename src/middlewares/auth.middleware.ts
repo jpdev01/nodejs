@@ -35,6 +35,30 @@ class AuthMiddleware {
             });
         }
     }
+
+    public async authUserByParams(req: Request, resp: Response, next: NextFunction): Promise<Response | void> {
+
+        try {
+            const user = await userModel.findById(req.params.id);
+
+            if (!user) {
+                return resp.status(400).send({
+                    message: 'Usuário não existe no sistema!'
+                });
+            }
+
+            req.user = user;
+            req.userChat = user;
+
+            //next é a proxima funcao do mapeamento
+            return next();
+
+        } catch (error) {
+            return resp.status(401).send({
+                message: 'Usuário inválido!'
+            });
+        }
+    }
 }
 
 export default new AuthMiddleware();

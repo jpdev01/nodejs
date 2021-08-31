@@ -6,6 +6,7 @@ declare global {
         interface Request {
             // adicionar user nas requests
             user?: UserInterface
+            userChat?: UserInterface
         }
     }
 }

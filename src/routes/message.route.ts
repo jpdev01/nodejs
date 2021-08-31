@@ -6,6 +6,7 @@ const messageRoute = Router();
 
 // o segundo param para frente sao as funcoes executadas
 messageRoute.post('/:receiverId',
+    authMiddleware.authUserByParams,
     authMiddleware.authUserByToken,
     messageController.send);
 //messageRoute.post('/:receiverId/:message', messageController.send)
