@@ -39,7 +39,7 @@ class AuthMiddleware {
     public async authUserByParams(req: Request, resp: Response, next: NextFunction): Promise<Response | void> {
 
         try {
-            const user = await userModel.findById(req.params.id);
+            const user = await userModel.findById(req.params.receiverId);
 
             if (!user) {
                 return resp.status(400).send({
