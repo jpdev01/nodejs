@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import messageModel from "../models/message.model";
 import userModel from "../models/user.model";
 
 class UserController {
@@ -61,6 +62,26 @@ class UserController {
                 $ne: currentUserId
              }
         });
+
+        const usersLastMessage = allUsers.map(user => {
+            return messageModel.findChat(currentUserId, user._id)
+            .sort('-createdAt')
+            .limit(1)
+            .map(messages => {
+                //para cada user ele fará isso
+                return {
+                    _id: user._id,
+                    name: user.name,
+                    avatar: user.avatar,
+                    lastMessage: messages[0] ? messages[0].text : null,
+                    lastMessageDate: messages[0] ? messages[0].createdAt : null
+                }
+            })
+        });
+        /*
+            // o "menos" - é para vir em order descrescente
+            // limit faz pegar apenas uma mensagem.
+            */
 
         return res.json(allUsers);
     }

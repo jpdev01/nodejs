@@ -18,13 +18,7 @@ class MessageController {
         const currentUserId = req.user._id;
         const receiverUserId = req.userChat._id;
 
-        const messages = await messageModel.find({
-            $or: [
-                { $and: [{ sender: currentUserId }, { receiver: receiverUserId }] },
-                { $and: [{ sender: receiverUserId }, { receiver: currentUserId }] }
-            ]
-        })
-            .sort('createdAt');
+        const messages = messageModel.findChat(currentUserId, receiverUserId).sort('createdAt');
         //sort ordena pela propriedade
 
         const messagesChat = messages.map(message => {
