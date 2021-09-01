@@ -49,6 +49,21 @@ class UserController {
     public getById(req: Request, res: Response): Response{
         return res.json(req.userChat);
     }
+
+    public async list(req: Request, res: Response) {
+        const currentUserId = req.user._id;
+
+        // query mongoDB
+        //ne = not equals
+        // query traz todos os usuarios do sitema, menos o atual logado
+        const allUsers = await userModel.find({
+            _id: { 
+                $ne: currentUserId
+             }
+        });
+
+        return res.json(allUsers);
+    }
 }
 
 export default new UserController();

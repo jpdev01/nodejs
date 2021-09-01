@@ -11,6 +11,12 @@ userRoute.get(
     '/:id', 
     authMiddleware.authUserByParams, 
     authMiddleware.authUserByToken, 
-    userController.getById)
+    userController.getById);
+
+    userRoute.get(
+        '/', 
+        authMiddleware.authUserByToken, 
+        userController.list);
+    
 
 export default userRoute;
