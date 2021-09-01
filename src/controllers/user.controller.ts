@@ -63,21 +63,35 @@ class UserController {
              }
         });
 
-        const usersLastMessage = allUsers.map(user => {
-            return messageModel.findChat(currentUserId, user._id)
-            .sort('-createdAt')
-            .limit(1)
-            .map(messages => {
-                //para cada user ele fará isso
-                return {
-                    _id: user._id,
-                    name: user.name,
-                    avatar: user.avatar,
-                    lastMessage: messages[0] ? messages[0].text : null,
-                    lastMessageDate: messages[0] ? messages[0].createdAt : null
-                }
+        // nao pode usar await pq sao varias consultas. é um array de promise's
+        // digamos que sejam 50 usuarios, trará 50 promises do findChat
+        // nesse caso usaremos Promise.all
+
+        /*
+        const promise1 = await ...;
+        const promise2 = await ...;
+        const result = await Promise.all(promise1,promise2);
+        */
+
+        const usersLastMessage = await Promise.all(
+            allUsers.map(user => {
+                return messageModel.findChat(currentUserId, user._id)
+                    .sort('-createdAt')
+                    .limit(1)
+                    .map(messages => {
+                        //para cada user ele fará isso
+                        return {
+                            _id: user._id,
+                            name: user.name,
+                            avatar: user.avatar,
+                            lastMessage: messages[0] ? messages[0].text : null,
+                            lastMessageDate: messages[0] ? messages[0].createdAt : null
+                        }
+                    });
             })
-        });
+        );
+
+    
         /*
             // o "menos" - é para vir em order descrescente
             // limit faz pegar apenas uma mensagem.
