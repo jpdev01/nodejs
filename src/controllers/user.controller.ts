@@ -85,14 +85,7 @@ class UserController {
                         messageService.getMessageDataByUser(messages, user)
                     )
             }));
-            const orderedMessages =  usersLastMessage.sort((a, b) => {
-                //itera os dados do array
-                // se a mensagem tem data
-                return (a.lastMessageDate ? 0 : 1) - (b.lastMessageDate ? 0: 1)
-                // compara as datas
-                || -(a.lastMessageDate > b.lastMessageDate)
-                || +(a.lastMessageDate > b.lastMessageDa)
-            })
+            const orderedMessages =  messageService.getOrderedMessages(usersLastMessage);
             return res.json(orderedMessages);
         
         } catch (err){
