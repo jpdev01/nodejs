@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import { json, Request, Response } from "express";
 import messageModel from "../models/message.model";
 import userModel from "../models/user.model";
+import messageService from '../services/message.service';
 
 class UserController {
 
@@ -68,36 +69,42 @@ class UserController {
         // nesse caso usaremos Promise.all
 
         /*
-        const promise1 = await ...;
-        const promise2 = await ...;
+        const promise1 = ..;
+        const promise2 = ... ;
         const result = await Promise.all(promise1,promise2);
+        
         */
+       
 
-        const usersLastMessage = await Promise.all(
-            allUsers.map(user => {
+        try{
+            const usersLastMessage = await Promise.all(allUsers.map(user => {
                 return messageModel.findChat(currentUserId, user._id)
                     .sort('-createdAt')
                     .limit(1)
-                    .map(messages => {
-                        //para cada user ele fará isso
-                        return {
-                            _id: user._id,
-                            name: user.name,
-                            avatar: user.avatar,
-                            lastMessage: messages[0] ? messages[0].text : null,
-                            lastMessageDate: messages[0] ? messages[0].createdAt : null
-                        }
-                    });
+                    .map(messages =>
+                        messageService.getMessageDataByUser(messages, user)
+                    )
+            }));
+            const orderedMessages =  usersLastMessage.sort((a, b) => {
+                //itera os dados do array
+                // se a mensagem tem data
+                return (a.lastMessageDate ? 0 : 1) - (b.lastMessageDate ? 0: 1)
+                // compara as datas
+                || -(a.lastMessageDate > b.lastMessageDate)
+                || +(a.lastMessageDate > b.lastMessageDa)
             })
-        );
+            return res.json(orderedMessages);
+        
+        } catch (err){
+            return res.json("Erro ao ler as mensagens");
+        }
 
     
         /*
             // o "menos" - é para vir em order descrescente
             // limit faz pegar apenas uma mensagem.
             */
-
-        return res.json(allUsers);
+            return res.json("");
     }
 }
 
