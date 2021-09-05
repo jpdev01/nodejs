@@ -7,8 +7,8 @@ class MessageService {
             _id: user._id,
             name: user.name,
             avatar: user.avatar,
-            lastMessage: messages[0] ? messages[0].text : null,
-            lastMessageDate: messages[0] ? messages[0].createdAt : null
+            lastMessage: messages[0]?.text || null,
+            lastMessageDate: messages[0]?.createdAt || null
         }
     }
 
